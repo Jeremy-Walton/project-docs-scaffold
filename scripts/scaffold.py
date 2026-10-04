@@ -10,6 +10,7 @@ Usage:
 """
 import argparse
 import datetime
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -19,6 +20,13 @@ TEMPLATE = Path(__file__).resolve().parent.parent / "assets" / "template"
 # Placeholders filled at scaffold time. Everywhere else, {braces} are meant to
 # be filled in by hand (or by Claude) while writing the docs, so leave them.
 DATE_FILES = {"README.md", "CHANGELOG.md"}
+
+# Created as relative symlinks rather than stored in the template, because
+# zipping the skill for upload can flatten symlinks into copies.
+SYMLINKS = {
+    ".claude/skills": "../.agents/skills",
+    ".claude/hooks": "../.agents/hooks",
+}
 
 
 def main() -> int:
@@ -61,6 +69,17 @@ def main() -> int:
             out.write_text(text, encoding="utf-8")
         else:
             shutil.copy2(src, out)
+
+    for link, target in SYMLINKS.items():
+        out = dest / link
+        if os.path.lexists(out):
+            skipped.append(Path(link))
+            continue
+        created.append(Path(f"{link} -> {target}"))
+        if args.dry_run:
+            continue
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.symlink_to(target, target_is_directory=True)
 
     verb = "Would create" if args.dry_run else "Created"
     print(f"{verb} {len(created)} file(s) in {dest}")

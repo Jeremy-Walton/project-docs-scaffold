@@ -1,6 +1,6 @@
 ---
 name: project-docs-scaffold
-description: Scaffold a standard set of short, single-purpose markdown docs (README, CHANGELOG, and docs/ with PRODUCT, PERSONAS, GLOSSARY, ROADMAP, REJECTED_IDEAS, MONETIZATION, UX_FLOWS, DESIGN, BRAND, DOMAIN, STACK, ARCHITECTURE, INTEGRATIONS, CONVENTIONS, plus a per-feature PRD folder and a conventions folder) into a new or existing software project, then help fill them in. Use whenever the user wants to start a new app or project, set up project documentation, scaffold docs, "pull in the doc templates", bootstrap a product spec, or says they're starting something from scratch, even if they don't name this skill.
+description: Scaffold a standard set of short, single-purpose markdown docs (README, CHANGELOG, AGENTS.md/CLAUDE.md with .agents/ and .claude/ skill and hook folders, and docs/ with PRODUCT, PERSONAS, GLOSSARY, ROADMAP, REJECTED_IDEAS, MONETIZATION, UX_FLOWS, DESIGN, BRAND, DOMAIN, STACK, ARCHITECTURE, INTEGRATIONS, CONVENTIONS, plus a per-feature PRD folder and a conventions folder) into a new or existing software project, then help fill them in. Use whenever the user wants to start a new app or project, set up project documentation, scaffold docs, "pull in the doc templates", bootstrap a product spec, or says they're starting something from scratch, even if they don't name this skill.
 ---
 
 # Project docs scaffold
@@ -10,8 +10,18 @@ Drops a ready-made documentation skeleton into a project so the user can start f
 ## What gets created
 
 ```
-README.md                     front door: summary, quick start, doc index, notes for AI assistants
+README.md                     front door: summary, quick start, doc index
 CHANGELOG.md
+AGENTS.md                     AI agent entry point: labeled index of every doc, agent rules
+CLAUDE.md                     just `@AGENTS.md`
+.agents/skills/              real folder (empty, with .gitkeep)
+.agents/hooks/               require-doc-template.py: blocks PRD/convention writes that skip the template
+                             check-doc-index.py: at end of turn, flags docs missing from their index
+                             surface-conventions.py: before an edit, injects conventions whose
+                               `<!-- paths: -->` globs in CONVENTIONS.md match the file
+.claude/settings.json        wires up the three hooks
+.claude/skills -> ../.agents/skills   relative symlinks, made by the script
+.claude/hooks  -> ../.agents/hooks
 docs/
   PRODUCT.md                  the application concept; indexes a PRD per feature
   product/_TEMPLATE.md        copy per major feature -> product/feature-name.md
@@ -30,7 +40,7 @@ docs/
    python scripts/scaffold.py --dest <project-root> --name "<Project Name>"
    ```
    It never overwrites existing files (add `--force` only if the user explicitly asks), so it is safe in a project that already has some docs. `--dry-run` previews. It fills the project name and today's date in README and CHANGELOG and leaves every other placeholder alone.
-3. **Report briefly**: how many files were created and which, if any, were skipped. If `README.md` was skipped because one already exists, offer to add the documentation table from the template to it rather than replacing it.
+3. **Report briefly**: how many files were created and which, if any, were skipped. If `README.md` was skipped because one already exists, offer to add the documentation table from the template to it rather than replacing it. Same for `AGENTS.md` (offer to merge in the doc index) and `CLAUDE.md` (offer to add an `@AGENTS.md` line). If `.claude/settings.json` was skipped, offer to merge the `hooks` block from the template into it. If `.claude/skills` or `.claude/hooks` already exists as a real folder, the symlink is skipped; mention it and don't move anything without asking.
 4. **Offer to start filling it in**, beginning with `docs/PRODUCT.md`. Don't start writing unprompted beyond that offer.
 
 ## Helping fill the docs in
@@ -40,6 +50,7 @@ The point of the scaffold is that the user fills these in, so make that easy wit
 - Work one doc at a time, in roughly this order: PRODUCT, PERSONAS, GLOSSARY, then whatever the user cares about next. Ask the few questions that doc needs, then write the answers into it.
 - Only record what the user actually said. If something is unknown, leave its placeholder; an honest gap beats a plausible guess, since these docs get read as ground truth later.
 - When a feature comes up, copy `docs/product/_TEMPLATE.md` to `docs/product/<feature-name>.md` and add a row to the Features table in PRODUCT.md.
+- When a doc is added or renamed, update the index in both README.md and AGENTS.md.
 - When the user rejects an idea, record it in REJECTED_IDEAS with the reason, so it isn't re-proposed.
 - New vocabulary goes into GLOSSARY first; other docs then use the term exactly.
 - Leave `docs/conventions/` empty until there is a real convention to record. Use `conventions/_TEMPLATE.md` (its header comment explains when a rule belongs in prose versus a linter or hook), and add the index entry to CONVENTIONS.md.

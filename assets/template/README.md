@@ -40,7 +40,4 @@ See also: [CHANGELOG](CHANGELOG.md)
 
 ## For AI assistants
 
-- Read PRODUCT, GLOSSARY, and REJECTED_IDEAS before proposing features.
-- Use GLOSSARY terms exactly. Don't invent synonyms.
-- Check STACK and CONVENTIONS before writing code.
-- If docs conflict, the more specific doc wins; flag the conflict instead of guessing.
+See [AGENTS.md](AGENTS.md).
