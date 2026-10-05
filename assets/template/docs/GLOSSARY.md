@@ -1,6 +1,6 @@
 # Glossary
 
-One agreed meaning per term, used identically in code, UI, and docs. Keep alphabetical.
+One agreed meaning per term, used identically in code, UI, and docs. Keep alphabetical. Use these terms, don't invent synonyms.
 
 | Term | Definition | Don't call it |
 |---|---|---|

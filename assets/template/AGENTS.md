@@ -29,6 +29,3 @@ Instructions for AI agents working in this repo. The human overview is [README](
 ## Rules
 
 - Read PRODUCT, GLOSSARY, and REJECTED_IDEAS before proposing features.
-- Use GLOSSARY terms exactly. Don't invent synonyms.
-- Check CONVENTIONS before writing code.
-- If docs conflict, the more specific doc wins; flag the conflict instead of guessing.
