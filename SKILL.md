@@ -17,7 +17,7 @@ CLAUDE.md                     just `@AGENTS.md`
 .agents/skills/              real folder (empty, with .gitkeep)
 .agents/hooks/               require-doc-template.py: blocks PRD/convention writes that skip the template
                              check-doc-index.py: at end of turn, flags docs missing from their index
-                             surface-conventions.py: before an edit, injects conventions whose
+                             surface_conventions.rb: before an edit, points to conventions whose
                                `<!-- paths: -->` globs in CONVENTIONS.md match the file
 .claude/settings.json        wires up the three hooks
 .claude/skills -> ../.agents/skills   relative symlinks, made by the script
