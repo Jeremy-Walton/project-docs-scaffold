@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/require_doc_template.rb"
+            "command": "ruby --disable-gems \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/require_doc_template.rb"
           }
         ]
       },
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/surface_conventions.rb"
+            "command": "ruby --disable-gems \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/surface_conventions.rb"
           }
         ]
       }
@@ -25,12 +25,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/lint_changed_files.rb",
+            "command": "ruby --disable-gems \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/lint_changed_files.rb",
             "timeout": 120
           },
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/check_doc_index.rb"
+            "command": "ruby --disable-gems \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/check_doc_index.rb"
           }
         ]
       }

@@ -8,42 +8,35 @@ require 'json'
 require 'tmpdir'
 require 'fileutils'
 
-# `- [Title](conventions/<slug>.md) — <description> <!-- paths: g1, g2 -->`
-INDEX_LINE = %r{\A-\s*\[.*?\]\(conventions/([\w-]+)\.md\)\s*—\s*(.*)\z}
+# Index entries look like `- [Title](conventions/<slug>.md) — <description> <!-- paths: g1, g2 -->`,
+# but only the link and the paths comment are required.
+LINK = %r{\]\(conventions/([\w-]+)\.md\)}
 PATHS_COMMENT = /<!--\s*paths:\s*(.*?)\s*-->/
 # Splits on commas or whitespace, but keeps `{rb,erb}` whole.
 GLOB = /(?:\{[^}]*\}|[^,\s])+/
 # FNM_DOTMATCH so `**/*.rb` reaches `.agents/` and `.github/`.
 GLOB_FLAGS = File::FNM_PATHNAME | File::FNM_EXTGLOB | File::FNM_DOTMATCH
 
+# Entries whose doc doesn't exist are dropped, which also skips the index's `slug.md` shape example.
 def conventions(project_dir)
   index = File.join(project_dir, 'docs', 'CONVENTIONS.md')
   return [] unless File.exist?(index)
 
-  in_fence = false
   File.readlines(index).filter_map do |line|
-    # Skips the shape example in the index's code fence.
-    if line.lstrip.start_with?('```')
-      in_fence = !in_fence
-      next
-    end
-    m = !in_fence && line.strip.match(INDEX_LINE)
-    next unless m
+    link = line.match(LINK)
+    globs = line[PATHS_COMMENT, 1]
+    next unless link && globs
+    next unless File.exist?(File.join(project_dir, 'docs', 'conventions', "#{link[1]}.md"))
 
-    slug = m[1]
-    next unless File.exist?(File.join(project_dir, 'docs', 'conventions', "#{slug}.md"))
-
-    rest = m[2]
-    globs = rest[PATHS_COMMENT, 1].to_s.scan(GLOB)
-    description = rest.sub(PATHS_COMMENT, '').strip.sub(/\.\z/, '')
-    { slug: slug, description: description, globs: globs }
+    description = link.post_match.sub(PATHS_COMMENT, '').sub(/\A\s*[—–-]+/, '').strip.delete_suffix('.')
+    { slug: link[1], description: description, globs: globs.scan(GLOB) }
   end
 end
 
-# With FNM_PATHNAME a bare `**` only matches top-level names, but Copilot's `applyTo: "**"`
-# means every file.
+# With FNM_PATHNAME a trailing `**` only matches one level, but `app/**` (or Copilot's `applyTo: "**"`)
+# means everything below.
 def glob_match?(glob, path)
-  glob == '**' || File.fnmatch?(glob, path, GLOB_FLAGS)
+  File.fnmatch?(glob.sub(/\*\*\z/, '**/*'), path, GLOB_FLAGS)
 end
 
 input = begin
@@ -70,15 +63,13 @@ session_id = 'default' if session_id.empty?
 marker_dir = File.join(Dir.tmpdir, "claude-conventions-#{session_id}")
 FileUtils.mkdir_p(marker_dir)
 
-fresh = matched.reject do |conv|
-  marker = File.join(marker_dir, conv[:slug])
-  seen = File.exist?(marker)
-  FileUtils.touch(marker)
-  seen
-end
+fresh = matched.reject { |conv| File.exist?(File.join(marker_dir, conv[:slug])) }
 exit 0 if fresh.empty?
 
-lines = fresh.map { |conv| "  • docs/conventions/#{conv[:slug]}.md — #{conv[:description]}" }
+FileUtils.touch(fresh.map { |conv| File.join(marker_dir, conv[:slug]) })
+lines = fresh.map do |conv|
+  ["  • docs/conventions/#{conv[:slug]}.md", conv[:description]].reject(&:empty?).join(' — ')
+end
 puts JSON.generate(
   hookSpecificOutput: {
     hookEventName: 'PreToolUse',

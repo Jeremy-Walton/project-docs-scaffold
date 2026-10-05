@@ -35,11 +35,9 @@ problems = []
 problems << 'start with a `# Title` line' unless content.lstrip.start_with?('# ')
 problems << "delete the template's <!-- guidance --> comments" if content.include?('<!--')
 # Convention sections are optional by design; PRD sections are not.
-if kind == 'product'
-  missing = headings(File.read(template)) - headings(content)
-  if missing.any?
-    problems << "keep every template section, leaving {placeholders} for unknowns; missing: #{missing.join(', ')}"
-  end
+missing = kind == 'product' ? headings(File.read(template)) - headings(content) : []
+if missing.any?
+  problems << "keep every template section, leaving {placeholders} for unknowns; missing: #{missing.join(', ')}"
 end
 exit 0 if problems.empty?
 
