@@ -19,7 +19,9 @@ CLAUDE.md                     just `@AGENTS.md`
                              check-doc-index.py: at end of turn, flags docs missing from their index
                              surface_conventions.rb: before an edit, points to conventions whose
                                `<!-- paths: -->` globs in CONVENTIONS.md match the file
-.claude/settings.json        wires up the three hooks
+                             lint_changed_files.rb: at end of turn, autocorrects and lints edited files with
+                               whichever supported linters the project has installed
+.claude/settings.json        wires up the hooks
 .claude/skills -> ../.agents/skills   relative symlinks, made by the script
 .claude/hooks  -> ../.agents/hooks
 docs/
