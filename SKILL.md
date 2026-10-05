@@ -15,8 +15,8 @@ CHANGELOG.md
 AGENTS.md                     AI agent entry point: labeled index of every doc, agent rules
 CLAUDE.md                     just `@AGENTS.md`
 .agents/skills/              real folder (empty, with .gitkeep)
-.agents/hooks/               require-doc-template.py: blocks PRD/convention writes that skip the template
-                             check-doc-index.py: at end of turn, flags docs missing from their index
+.agents/hooks/               require_doc_template.rb: blocks PRD/convention writes that skip the template
+                             check_doc_index.rb: at end of turn, flags docs missing from their index
                              surface_conventions.rb: before an edit, points to conventions whose
                                `<!-- paths: -->` globs in CONVENTIONS.md match the file
                              lint_changed_files.rb: at end of turn, autocorrects and lints edited files with
