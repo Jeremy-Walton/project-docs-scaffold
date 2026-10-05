@@ -17,7 +17,6 @@ Instructions for AI agents working in this repo. The human overview is [README](
 - [DESIGN](docs/DESIGN.md): look and feel
 - [BRAND](docs/BRAND.md): voice, tone, reusable copy
 - [DOMAIN](docs/DOMAIN.md): core entities and relationships
-- [STACK](docs/STACK.md): languages, frameworks, tools
 - [ARCHITECTURE](docs/ARCHITECTURE.md): how the pieces fit together
 - [INTEGRATIONS](docs/INTEGRATIONS.md): third-party services
 - [CONVENTIONS](docs/CONVENTIONS.md): coding rules index; rules live in [conventions/](docs/conventions/)
@@ -31,5 +30,5 @@ Instructions for AI agents working in this repo. The human overview is [README](
 
 - Read PRODUCT, GLOSSARY, and REJECTED_IDEAS before proposing features.
 - Use GLOSSARY terms exactly. Don't invent synonyms.
-- Check STACK and CONVENTIONS before writing code.
+- Check CONVENTIONS before writing code.
 - If docs conflict, the more specific doc wins; flag the conflict instead of guessing.

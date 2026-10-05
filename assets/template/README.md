@@ -31,7 +31,6 @@ Start with PRODUCT, then read in whatever order fits your task.
 | [DESIGN](docs/DESIGN.md) | How does it look? |
 | [BRAND](docs/BRAND.md) | How does it sound? |
 | [DOMAIN](docs/DOMAIN.md) | What are the core concepts and data? |
-| [STACK](docs/STACK.md) | What technology do we use? |
 | [ARCHITECTURE](docs/ARCHITECTURE.md) | How do the pieces fit together? |
 | [INTEGRATIONS](docs/INTEGRATIONS.md) | What third-party services do we depend on? |
 | [CONVENTIONS](docs/CONVENTIONS.md) | How do we write and ship code? |

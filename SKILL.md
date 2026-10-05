@@ -1,6 +1,6 @@
 ---
 name: project-docs-scaffold
-description: Scaffold a standard set of short, single-purpose markdown docs (README, CHANGELOG, AGENTS.md/CLAUDE.md with .agents/ and .claude/ skill and hook folders, and docs/ with PRODUCT, PERSONAS, GLOSSARY, ROADMAP, REJECTED_IDEAS, MONETIZATION, UX_FLOWS, DESIGN, BRAND, DOMAIN, STACK, ARCHITECTURE, INTEGRATIONS, CONVENTIONS, plus a per-feature PRD folder and a conventions folder) into a new or existing software project, then help fill them in. Use whenever the user wants to start a new app or project, set up project documentation, scaffold docs, "pull in the doc templates", bootstrap a product spec, or says they're starting something from scratch, even if they don't name this skill.
+description: Scaffold a standard set of short, single-purpose markdown docs (README, CHANGELOG, AGENTS.md/CLAUDE.md with .agents/ and .claude/ skill and hook folders, and docs/ with PRODUCT, PERSONAS, GLOSSARY, ROADMAP, REJECTED_IDEAS, MONETIZATION, UX_FLOWS, DESIGN, BRAND, DOMAIN, ARCHITECTURE, INTEGRATIONS, CONVENTIONS, plus a per-feature PRD folder and a conventions folder) into a new or existing software project, then help fill them in. Use whenever the user wants to start a new app or project, set up project documentation, scaffold docs, "pull in the doc templates", bootstrap a product spec, or says they're starting something from scratch, even if they don't name this skill.
 ---
 
 # Project docs scaffold
@@ -27,7 +27,7 @@ docs/
   product/_TEMPLATE.md        copy per major feature -> product/feature-name.md
   PERSONAS.md  GLOSSARY.md  ROADMAP.md  REJECTED_IDEAS.md  MONETIZATION.md
   UX_FLOWS.md  DESIGN.md  BRAND.md          (BRAND also owns reusable copy)
-  DOMAIN.md  STACK.md  ARCHITECTURE.md  INTEGRATIONS.md
+  DOMAIN.md  ARCHITECTURE.md  INTEGRATIONS.md
   CONVENTIONS.md              index only; rules live in conventions/
   conventions/_TEMPLATE.md    copy per convention -> conventions/slug.md
 ```

@@ -8,7 +8,7 @@ Index only. The rules live in [`conventions/`](conventions/), one short file per
 
 - **Rules the tooling can't enforce.** If a linter, formatter, generator, or hook can check it, configure that instead of writing prose.
 - **Facts the code can't tell you on sight.** Traps, non-obvious constraints, and the reason behind a rule that looks arbitrary.
-- **Not what other docs already own.** Technology choices live in [STACK](STACK.md), structure in [ARCHITECTURE](ARCHITECTURE.md), terms in [GLOSSARY](GLOSSARY.md).
+- **Not what other docs already own.** Structure lives in [ARCHITECTURE](ARCHITECTURE.md), terms in [GLOSSARY](GLOSSARY.md).
 - **Not step-by-step instructions or restated signatures.** Point at a reference implementation instead.
 
 ## Index

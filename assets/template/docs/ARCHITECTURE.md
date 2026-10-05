@@ -1,6 +1,6 @@
 # Architecture
 
-How the pieces fit together. What the pieces are made of lives in [STACK](STACK.md).
+How the pieces fit together.
 
 ## Overview
 
